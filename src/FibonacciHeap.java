@@ -2,7 +2,7 @@
 public class FibonacciHeap {
 
 	// Insert a new node in the heap
-	public void insert() {
+	public void insert(Node x) {
 
 	}
 
