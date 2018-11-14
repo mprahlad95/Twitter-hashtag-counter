@@ -17,6 +17,10 @@ public class Node {
 
 	}
 
+	public int getKey() {
+		return this.key;
+	}
+
 	public String getHashTag() {
 		return this.hash;
 	}

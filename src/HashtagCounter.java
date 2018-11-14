@@ -24,18 +24,17 @@ public class HashtagCounter {
 			BufferedReader br = new BufferedReader(new FileReader(filePath));
 			String s = br.readLine().trim();
 
-			// Input validation
-			// Pattern p = Pattern.compile("([\\$])([0-9A-Za-z_]+)(\\s)(\\d+)");
-
 			writer = new BufferedWriter(new FileWriter(file));
 
 			while (s != null) {
 				s = s.trim();
 				// Insert, increase-key operations
-				if (s.charAt(0) == '#') {
+				if (s.charAt(0) == '$') {
 					String hashTag = s.substring(1, s.indexOf(' '));
 					int key = Integer.parseInt(s.substring(s.indexOf(' ') + 1));
-					System.out.println(hashTag + " " + key);
+
+					// System.out.println(hashTag + " " + key);
+
 					// If it doesn't contain key, create new node and insert into heap and hashmap
 					if (!hm.containsKey(hashTag)) {
 						Node node = new Node(hashTag, key);
@@ -45,17 +44,28 @@ public class HashtagCounter {
 
 					// If already in hashmap, increase key
 					else {
+						// System.out.println("AAA");
 						int increaseKey = hm.get(hashTag).key + key;
+						System.out.println("Before: " + hashTag + " " + key);
 						fh.increaseKey(hm.get(hashTag), increaseKey);
+						System.out.println("After: " + hashTag + " " + hm.get(hashTag).key);
 					}
 				}
 
 				// Check for top n hashtags
 				else if (s.matches("(\\d+)")) {
 
+					// for (Map.Entry<String, Node> entry : hm.entrySet()) {
+					// System.out.println(
+					// entry.getKey() + " " + entry.getValue().getHashTag() + " " +
+					// entry.getValue().getKey());
+					// }
+
 					// Nodes to be removed
 					int removeNumber = Integer.parseInt(s);
-					System.out.println(removeNumber);
+
+					// System.out.println(removeNumber);
+
 					ArrayList<Node> removedNodes = new ArrayList<>(removeNumber);
 
 					// Extract max node and remove from hashmap according to input

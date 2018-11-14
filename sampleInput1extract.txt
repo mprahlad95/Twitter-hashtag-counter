@@ -1,0 +1,15 @@
+$facebook 5
+$youtube 3
+$facebook 10
+$amazon 2
+$gmail 4
+$weather 2 
+$facebook 6
+$youtube 8
+$ebay 2
+$news 2
+$facebook 12
+$youtube 11
+$amazon 6
+3
+stop

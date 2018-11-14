@@ -2,9 +2,8 @@ import java.util.*;
 
 public class FibonacciHeap {
 
-	private Node maxNode;
-	@SuppressWarnings("unused")
-	private int numberOfNodes;
+	Node maxNode;
+	int numberOfNodes;
 
 	// Insert a new node in the heap
 	public void insert(Node x) {
@@ -80,8 +79,21 @@ public class FibonacciHeap {
 		}
 	}
 
+	// if k > key[x]
+	// then error "new key is greater than current key"
+	// key[x] := k
+	// y := p[x]
+	// if y <> NIL and key[x]<key[y]
+	// then CUT(H, x, y)
+	// CASCADING-CUT(H,y)
+	// if key[x]<key[min[H]]
+	// then min[H] := x
+
 	// Increase value of key for the input node
 	public void increaseKey(Node x, int k) {
+
+//		System.out.println("Before: " + x.getHashTag() + " " + x.getKey() + " " + k);
+
 		if (k < x.key)
 			x.key = k;
 
@@ -95,10 +107,16 @@ public class FibonacciHeap {
 		if (x.key > maxNode.key) {
 			maxNode = x;
 		}
+
+//		System.out.println("After: " + x.getHashTag() + " " + x.getKey() + " " + k);
+//		System.out.println();
 	}
 
 	// Extract max from the heap
 	public Node extractMax() {
+
+		// System.out.println(maxNode.getHashTag() + " " + maxNode.getKey());
+
 		Node y = maxNode;
 		if (y != null) {
 			int numberofChildren = y.degree;
