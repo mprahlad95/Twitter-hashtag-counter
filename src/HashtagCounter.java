@@ -1,14 +1,9 @@
 import java.io.*;
 import java.util.*;
-import java.util.regex.*;
-
-//TODO
-
-//First char $
-//Negative count for input
-//Check regex and stop condition
 
 public class HashtagCounter {
+	private static BufferedReader br;
+
 	public static void main(String[] args) {
 		// Timer **TEST**
 		long startTime = System.currentTimeMillis();
@@ -27,22 +22,23 @@ public class HashtagCounter {
 
 		// try IOException and other unchecked exceptions
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(filePath));
-			String s = br.readLine();
+			br = new BufferedReader(new FileReader(filePath));
+			String s = br.readLine().trim();
 
 			// Input validation
-			Pattern p = Pattern.compile("([#])([A-Za-z_]+)(\\s)(\\d+)");
+			// Pattern p = Pattern.compile("([\\$])([0-9A-Za-z_]+)(\\s)(\\d+)");
 
 			writer = new BufferedWriter(new FileWriter(file));
 
 			while (s != null) {
+				s = s.trim();
 				System.out.println(s);
-				Matcher m = p.matcher(s);
+				// Matcher m = p.matcher(s);
 
 				// Insert, increase-key operations
-				if (m.find()) {
-					String hashTag = m.group(2);
-					int key = Integer.parseInt(m.group(4));
+				if (s.charAt(0) == '$') {
+					String hashTag = s.substring(1, s.indexOf(' '));
+					int key = Integer.parseInt(s.substring(s.indexOf(' ') + 1));
 
 					// If it doesn't contain key, create new node and insert into heap and hashmap
 					if (!hm.containsKey(hashTag)) {
@@ -74,8 +70,7 @@ public class HashtagCounter {
 						// Create new node for insertion
 						Node newNode = new Node(node.getHashTag(), node.key);
 
-						// Add the new node for insertion into removed nodes list and "," until the last
-						// hashtag
+						// Insertion into removed nodes list, add "," until last hashtag
 						removedNodes.add(newNode);
 						if (i < removeNumber - 1)
 							writer.write(node.getHashTag() + ",");
@@ -91,7 +86,10 @@ public class HashtagCounter {
 
 					// Move to new line in the writer pointer
 					writer.newLine();
-				}
+
+				} else if (s.equals("stop"))
+					break;
+
 				s = br.readLine();
 			}
 		} catch (Exception e) {
