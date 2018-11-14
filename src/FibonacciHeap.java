@@ -3,6 +3,7 @@ import java.util.*;
 public class FibonacciHeap {
 
 	private Node maxNode;
+	@SuppressWarnings("unused")
 	private int numberOfNodes;
 
 	// Insert a new node in the heap

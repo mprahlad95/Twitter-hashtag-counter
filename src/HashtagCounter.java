@@ -2,8 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class HashtagCounter {
-	private static BufferedReader br;
-
 	public static void main(String[] args) {
 		// Timer **TEST**
 		long startTime = System.currentTimeMillis();
@@ -22,7 +20,8 @@ public class HashtagCounter {
 
 		// try IOException and other unchecked exceptions
 		try {
-			br = new BufferedReader(new FileReader(filePath));
+			@SuppressWarnings("resource")
+			BufferedReader br = new BufferedReader(new FileReader(filePath));
 			String s = br.readLine().trim();
 
 			// Input validation
@@ -32,14 +31,11 @@ public class HashtagCounter {
 
 			while (s != null) {
 				s = s.trim();
-				System.out.println(s);
-				// Matcher m = p.matcher(s);
-
 				// Insert, increase-key operations
-				if (s.charAt(0) == '$') {
+				if (s.charAt(0) == '#') {
 					String hashTag = s.substring(1, s.indexOf(' '));
 					int key = Integer.parseInt(s.substring(s.indexOf(' ') + 1));
-
+					System.out.println(hashTag + " " + key);
 					// If it doesn't contain key, create new node and insert into heap and hashmap
 					if (!hm.containsKey(hashTag)) {
 						Node node = new Node(hashTag, key);

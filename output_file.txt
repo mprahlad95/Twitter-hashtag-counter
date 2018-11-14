@@ -1,2 +1,2 @@
-facebook,gmail,youtube
-netflix,facebook,cnn,gmail,playing
+saturday,reading,sunday
+school,saturday,class,reading,playing
