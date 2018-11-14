@@ -1,46 +1,51 @@
+
+//Creates a new heap of fibonacci heap
+
 import java.util.*;
 
 public class FibonacciHeap {
 
-	Node maxNode;
-	int numberOfNodes;
+	private Node maxNode;
+	private int numberOfNodes;
 
 	// Insert a new node in the heap
-	public void insert(Node x) {
+	public void insert(Node node) {
 
-		// Check if max node is not null
+		// check if max node is not null
 		if (maxNode != null) {
 
-			// Add to the right of max node
-			x.left = maxNode;
-			x.right = maxNode.right;
-			maxNode.right = x;
+			// add to the right of max node
+			node.left = maxNode;
+			node.right = maxNode.right;
+			maxNode.right = node;
 
-			// Check if node right is not null
-			if (x.right != null) {
-				x.right.left = x;
+			// check if node right is not null
+			if (node.right != null) {
+				node.right.left = node;
 			}
-			if (x.right == null) {
-				x.right = maxNode;
-				maxNode.left = x;
+			if (node.right == null) {
+				node.right = maxNode;
+				maxNode.left = node;
 			}
-			if (x.key > maxNode.key) {
-				maxNode = x;
+			if (node.key > maxNode.key) {
+				maxNode = node;
 			}
-		} else
-			maxNode = x;
+		} else {
+			maxNode = node;
+
+		}
 
 		numberOfNodes++;
 	}
 
-	// Perform a cut; x from y
+	// performs cut operation. Cuts x from y
 	public void cut(Node x, Node y) {
-		// Remove x from child of y and decrease the degree of y
+		// removes x from child of y and decreases the degree of y
 		x.left.right = x.right;
 		x.right.left = x.left;
 		y.degree--;
 
-		// Reset y.child if needed
+		// reset y.child if necessary
 		if (y.child == x) {
 			y.child = x.right;
 		}
@@ -49,53 +54,44 @@ public class FibonacciHeap {
 			y.child = null;
 		}
 
-		// Add x to root list of heap
+		// add x to root list of heap
 		x.left = maxNode;
 		x.right = maxNode.right;
 		maxNode.right = x;
 		x.right.left = x;
 
-		// Set parent of x to nil
+		// set parent of x to nil
 		x.parent = null;
 
-		// Set mark to false
+		// set mark to false
 		x.mark = false;
 	}
 
-	// Perform cascading cut on the given node
+	// Performs cascading cut on the given node as given in Cormen
 	public void cascadingCut(Node y) {
 		Node x = y.parent;
 
-		// If there is a parent
+		// if there is a parent
 		if (x != null) {
-			// If y is unmarked, set it marked
-			if (!y.mark)
+			// if y is unmarked, set it marked
+			if (!y.mark) {
 				y.mark = true;
-			else {
-				// If it's marked, cut it from its parent and recursively cut all predecessors
+			} else {
+				// it's marked, cut it from parent
 				cut(y, x);
+
+				// cut its parent as well
 				cascadingCut(x);
 			}
 		}
 	}
 
-	// if k > key[x]
-	// then error "new key is greater than current key"
-	// key[x] := k
-	// y := p[x]
-	// if y <> NIL and key[x]<key[y]
-	// then CUT(H, x, y)
-	// CASCADING-CUT(H,y)
-	// if key[x]<key[min[H]]
-	// then min[H] := x
-
-	// Increase value of key for the input node
+	// Increase the value of key for the given node in heap
 	public void increaseKey(Node x, int k) {
+		if (k < x.key) {
+		}
 
-//		System.out.println("Before: " + x.getHashTag() + " " + x.getKey() + " " + k);
-
-		if (k < x.key)
-			x.key = k;
+		x.key = k;
 
 		Node y = x.parent;
 
@@ -107,66 +103,60 @@ public class FibonacciHeap {
 		if (x.key > maxNode.key) {
 			maxNode = x;
 		}
-
-//		System.out.println("After: " + x.getHashTag() + " " + x.getKey() + " " + k);
-//		System.out.println();
 	}
 
-	// Extract max from the heap
+	// Removes the maximum from the heap
 	public Node extractMax() {
-
-		// System.out.println(maxNode.getHashTag() + " " + maxNode.getKey());
-
-		Node y = maxNode;
-		if (y != null) {
-			int numberofChildren = y.degree;
-			Node x = y.child;
+		Node z = maxNode;
+		if (z != null) {
+			int numberofChildren = z.degree;
+			Node x = z.child;
 			Node tempRight;
 
-			// While children are present
+			// while there are childred of max
 			while (numberofChildren > 0) {
 				tempRight = x.right;
 
-				// Remove x from child list
+				// remove x from child list
 				x.left.right = x.right;
 				x.right.left = x.left;
 
-				// Add x to root list of heap
+				// add x to root list of heap
 				x.left = maxNode;
 				x.right = maxNode.right;
 				maxNode.right = x;
 				x.right.left = x;
 
-				// Set parent to null
+				// set parent to null
 				x.parent = null;
 				x = tempRight;
-				// Decrease number of children of maxNode
+				// decrease number of children of max
 				numberofChildren--;
 
 			}
 
-			// Remove y from root list of heap
-			y.left.right = y.right;
-			y.right.left = y.left;
+			// remove z from root list of heap
+			z.left.right = z.right;
+			z.right.left = z.left;
 
-			if (y == y.right)
+			if (z == z.right) {
 				maxNode = null;
-			else {
-				maxNode = y.right;
-				pairWiseCombine();
+
+			} else {
+				maxNode = z.right;
+				degreewiseMerge();
 			}
 			numberOfNodes--;
-			return y;
+			return z;
 		}
 		return null;
 	}
 
-	// Perform degree-wise merge
-	public void pairWiseCombine() {
-		// Arbitrarily chosen
+	// performs degree wise merge(if 2 degrees are same then it merges it)
+	public void degreewiseMerge() {
 		int sizeofDegreeTable = 45;
 
-		List<Node> degreeTable = new ArrayList<>(sizeofDegreeTable);
+		List<Node> degreeTable = new ArrayList<Node>(sizeofDegreeTable);
 
 		// Initialize degree table
 		for (int i = 0; i < sizeofDegreeTable; i++) {
@@ -193,29 +183,30 @@ public class FibonacciHeap {
 			int d = x.degree;
 			Node next = x.right;
 
-			// Check if degree is in degree table - if not, add. Else combine and merge
-			while (true) {
+			// check if the degree is there in degree table, if not add,if yes then combine
+			// and merge
+			for (;;) {
 				Node y = degreeTable.get(d);
 				if (y == null) {
 					break;
 				}
 
-				// Check for greater key value
+				// Check whos key value is greater
 				if (x.key < y.key) {
 					Node temp = y;
 					y = x;
 					x = temp;
 				}
 
-				// Make y the child of x if x key value is greater
+				// make y the child of x as x key value is greater
 				makeChild(y, x);
 
-				// Set the degree to null as x and y are combined now
+				// setthe degree to null as x and y are combined now
 				degreeTable.set(d, null);
 				d++;
 			}
 
-			// Store the new combined degree in the degree table
+			// store the new x(x+y) in the respective degree table postion
 			degreeTable.set(d, x);
 
 			// Move forward through list.
@@ -226,61 +217,61 @@ public class FibonacciHeap {
 		// Deleting the max node
 		maxNode = null;
 
-		// Combine entries of the degree table
+		// combine entries of the degree table
 		for (int i = 0; i < sizeofDegreeTable; i++) {
 			Node y = degreeTable.get(i);
 			if (y == null) {
 				continue;
 			}
 
+			// till max node is not null
 			if (maxNode != null) {
 
-				// Remove node from root list
+				// First remove node from root list.
 				y.left.right = y.right;
 				y.right.left = y.left;
 
-				// Add to root list, again
+				// Now add to root list, again.
 				y.left = maxNode;
 				y.right = maxNode.right;
 				maxNode.right = y;
 				y.right.left = y;
 
-				// Check if it's a new maximum
+				// Check if this is a new maximum
 				if (y.key > maxNode.key) {
 					maxNode = y;
 				}
-			} else
+			} else {
 				maxNode = y;
+			}
 		}
 	}
 
-	// Make y the child of node x
+	// Makes y the child of node x
 	public void makeChild(Node y, Node x) {
-		{
-			// Remove y from root list of heap
-			y.left.right = y.right;
-			y.right.left = y.left;
+		// remove y from root list of heap
+		y.left.right = y.right;
+		y.right.left = y.left;
 
-			// Make y child of x
-			y.parent = x;
+		// make y a child of x
+		y.parent = x;
 
-			if (x.child == null) {
-				x.child = y;
-				y.right = y;
-				y.left = y;
-			} else {
-				y.left = x.child;
-				y.right = x.child.right;
-				x.child.right = y;
-				y.right.left = y;
-			}
-
-			// Increase degree of x by 1
-			x.degree++;
-
-			// Mark y as false
-			y.mark = false;
+		if (x.child == null) {
+			x.child = y;
+			y.right = y;
+			y.left = y;
+		} else {
+			y.left = x.child;
+			y.right = x.child.right;
+			x.child.right = y;
+			y.right.left = y;
 		}
+
+		// increase degree of x by 1
+		x.degree++;
+
+		// make mark of y as false
+		y.mark = false;
 	}
 
 }

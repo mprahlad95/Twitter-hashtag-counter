@@ -1,1 +1,1 @@
-facebook,gmail,youtube
+facebook,youtube,amazon
