@@ -31,14 +31,14 @@ public class HashtagCounter {
 			String s = br.readLine();
 
 			// Input validation
-			Pattern p = Pattern.compile("([\\$])(^\\s+))(\\d+)");
+			Pattern p = Pattern.compile("([#])([A-Za-z_]+)(\\s)(\\d+)");
 			Pattern p1 = Pattern.compile("(\\d+)");
 
 			writer = new BufferedWriter(new FileWriter(file));
 
 			while (s != null) {
+				System.out.println(s);
 				Matcher m = p.matcher(s);
-				Matcher m1 = p1.matcher(s);
 
 				// Insert, increase-key operations
 				if (m.find()) {
@@ -60,11 +60,12 @@ public class HashtagCounter {
 				}
 
 				// Check for top n hashtags
-				else if (m1.find()) {
+				else if (s.matches("(\\d+)")) {
 
 					// Nodes to be removed
-					int removeNumber = Integer.parseInt(m1.group(1));
-					ArrayList<Node> removedNodes = new ArrayList<Node>(removeNumber);
+					int removeNumber = Integer.parseInt(s);
+					System.out.println(removeNumber);
+					ArrayList<Node> removedNodes = new ArrayList<>(removeNumber);
 
 					// Extract max node and remove from hashmap according to input
 					for (int i = 0; i < removeNumber; i++) {

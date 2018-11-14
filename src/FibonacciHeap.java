@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class FibonacciHeap {
 
@@ -102,7 +103,95 @@ public class FibonacciHeap {
 
 	// Perform degree-wise merge
 	public void pairWiseCombine() {
+		// Arbitrarily chosen
+		int sizeofDegreeTable = 45;
 
+		List<Node> degreeTable = new ArrayList<>(sizeofDegreeTable);
+
+		// Initialize degree table
+		for (int i = 0; i < sizeofDegreeTable; i++) {
+			degreeTable.add(null);
+		}
+
+		// Find the number of root nodes.
+		int numRoots = 0;
+		Node x = maxNode;
+
+		if (x != null) {
+			numRoots++;
+			x = x.right;
+
+			while (x != maxNode) {
+				numRoots++;
+				x = x.right;
+			}
+		}
+
+		// For each node in root list
+		while (numRoots > 0) {
+
+			int d = x.degree;
+			Node next = x.right;
+
+			// Check if degree is in degree table - if not, add. Else combine and merge
+			while (true) {
+				Node y = degreeTable.get(d);
+				if (y == null) {
+					break;
+				}
+
+				// Check for greater key value
+				if (x.key < y.key) {
+					Node temp = y;
+					y = x;
+					x = temp;
+				}
+
+				// Make y the child of x if x key value is greater
+				makeChild(y, x);
+
+				// Set the degree to null as x and y are combined now
+				degreeTable.set(d, null);
+				d++;
+			}
+
+			// Store the new combined degree in the degree table
+			degreeTable.set(d, x);
+
+			// Move forward through list.
+			x = next;
+			numRoots--;
+		}
+
+		// Deleting the max node
+		maxNode = null;
+
+		// Combine entries of the degree table
+		for (int i = 0; i < sizeofDegreeTable; i++) {
+			Node y = degreeTable.get(i);
+			if (y == null) {
+				continue;
+			}
+
+			if (maxNode != null) {
+
+				// Remove node from root list
+				y.left.right = y.right;
+				y.right.left = y.left;
+
+				// Add to root list, again
+				y.left = maxNode;
+				y.right = maxNode.right;
+				maxNode.right = y;
+				y.right.left = y;
+
+				// Check if it's a new maximum
+				if (y.key > maxNode.key) {
+					maxNode = y;
+				}
+			} else
+				maxNode = y;
+		}
 	}
 
 	// Make y the child of node x
