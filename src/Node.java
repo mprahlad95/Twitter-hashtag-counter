@@ -6,6 +6,7 @@ public class Node {
 	private String hash;
 	int key;
 
+	// Properties of Node
 	Node(String hash, int key) {
 		this.left = this;
 		this.right = this;
