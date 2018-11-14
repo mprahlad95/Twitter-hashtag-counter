@@ -32,7 +32,7 @@ public class HashtagCounter {
 			String s = br.readLine();
 
 			// Input validation
-			Pattern p = Pattern.compile("([$])([[a-z_]+)(\\s)(\\d+)");
+			Pattern p = Pattern.compile("([$])([[A-Za-z_]+)(\\s)(\\d+)");
 			Pattern p1 = Pattern.compile("(\\d+)");
 
 			writer = new BufferedWriter(new FileWriter(file));

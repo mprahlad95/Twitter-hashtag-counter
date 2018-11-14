@@ -1,9 +1,35 @@
 
 public class FibonacciHeap {
-
-	// Insert a new node in the heap
+	
+	private Node maxNode;
+    private int numberOfNodes;
+	
+    // Insert a new node in the heap
 	public void insert(Node x) {
 
+		// Check if max node is not null
+		if (maxNode != null) {
+
+			// Add to the right of max node
+			x.left = maxNode;
+			x.right = maxNode.right;
+			maxNode.right = x;
+
+			// Check if node right is not null
+			if (x.right != null) {
+				x.right.left = x;
+			}
+			if (x.right == null) {
+				x.right = maxNode;
+				maxNode.left = x;
+			}
+			if (x.key > maxNode.key) {
+				maxNode = x;
+			}
+		} else 
+			maxNode = x;
+		
+		numberOfNodes++;
 	}
 
 	// Perform a cut; x from y
