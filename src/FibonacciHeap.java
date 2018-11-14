@@ -98,6 +98,47 @@ public class FibonacciHeap {
 
 	// Extract max from the heap
 	public Node extractMax() {
+		Node y = maxNode;
+		if (y != null) {
+			int numberofChildren = y.degree;
+			Node x = y.child;
+			Node tempRight;
+
+			// While children are present
+			while (numberofChildren > 0) {
+				tempRight = x.right;
+
+				// Remove x from child list
+				x.left.right = x.right;
+				x.right.left = x.left;
+
+				// Add x to root list of heap
+				x.left = maxNode;
+				x.right = maxNode.right;
+				maxNode.right = x;
+				x.right.left = x;
+
+				// Set parent to null
+				x.parent = null;
+				x = tempRight;
+				// Decrease number of children of maxNode
+				numberofChildren--;
+
+			}
+
+			// Remove y from root list of heap
+			y.left.right = y.right;
+			y.right.left = y.left;
+
+			if (y == y.right)
+				maxNode = null;
+			else {
+				maxNode = y.right;
+				pairWiseCombine();
+			}
+			numberOfNodes--;
+			return y;
+		}
 		return null;
 	}
 
