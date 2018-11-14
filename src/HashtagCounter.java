@@ -4,17 +4,16 @@ import java.util.regex.*;
 
 //TODO
 
-//Check for Upper-case input
 //First char $
 //Negative count for input
+//Check regex and stop condition
 
 public class HashtagCounter {
-	public void main(String[] args) {
-
+	public static void main(String[] args) {
 		// Timer **TEST**
 		long startTime = System.currentTimeMillis();
 
-		String pathtofile = args[0];
+		String filePath = args[0];
 
 		// Hashmap to store hashtag and node
 		HashMap<String, Node> hm = new HashMap<>();
@@ -28,11 +27,11 @@ public class HashtagCounter {
 
 		// try IOException and other unchecked exceptions
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(pathtofile));
+			BufferedReader br = new BufferedReader(new FileReader(filePath));
 			String s = br.readLine();
 
 			// Input validation
-			Pattern p = Pattern.compile("([$])([[A-Za-z_]+)(\\s)(\\d+)");
+			Pattern p = Pattern.compile("([\\$])(^\\s+))(\\d+)");
 			Pattern p1 = Pattern.compile("(\\d+)");
 
 			writer = new BufferedWriter(new FileWriter(file));
