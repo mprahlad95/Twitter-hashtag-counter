@@ -1,2 +1,11 @@
-facebook,youtube,amazon
-facebook,youtube,gmail,ebay,amazon
+choirmaster,chokefull,chlamys,chlorination,chirr,chirurgy,chloramphenicol,chloramine
+chokefull,chlorococcales,chlorophthalmidae,chitterings,chlorination,chokra,cholinergic,chloramphenicol,chiseling
+chokefull,chirr,chlamys,chiseling,chlorophyta,chlorophyllose,chirurgy,chloramphenicol,chlorophthalmidae,chlorococcales
+chokefull,chiseling,chloramphenicol,chirr,chirurgy,chitterings,chisel
+chiseling,chloramphenicol,chokefull,chloroform,chlorococcales,chlamys,cholinergic,choline,chisel,chloranthaceae,chirr,chirurgy,chitterings,chlorophthalmidae
+chloramphenicol,chiseling,chisel,chlorination,chirr
+chiseling,chloramphenicol,chlorination,chloranthaceae,chlorococcales,chisel,chloroform,choleric,choeronycteris,chirr,chlortetracycline,chirurgical,chlorosis,chlorophyta
+chiseling,chloramphenicol,choeronycteris,chokra,chlorination,chloranthaceae,chlorococcales,choleric
+choeronycteris
+chloramphenicol,choice,chitinous,choeronycteris
+chondrosarcoma,choice,chitinous,choeronycteris,chloramphenicol,chiseling,chokra,chlorination,choirmaster,chlorosis
