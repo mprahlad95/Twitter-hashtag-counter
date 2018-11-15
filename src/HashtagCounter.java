@@ -46,9 +46,9 @@ public class HashtagCounter {
 					else {
 						// System.out.println("AAA");
 						int increaseKey = hm.get(hashTag).key + key;
-						System.out.println("Before: " + hashTag + " " + key);
+						// System.out.println("Before: " + hashTag + " " + key);
 						fh.increaseKey(hm.get(hashTag), increaseKey);
-						System.out.println("After: " + hashTag + " " + hm.get(hashTag).key);
+						// System.out.println("After: " + hashTag + " " + hm.get(hashTag).key);
 					}
 				}
 
