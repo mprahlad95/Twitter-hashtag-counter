@@ -1,7 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-public class HashtagCounter {
+public class keywordcounter {
+
 	public static void main(String[] args) {
 		// Timer **TEST**
 		long startTime = System.currentTimeMillis();
@@ -44,22 +45,13 @@ public class HashtagCounter {
 
 					// If already in hashmap, increase key
 					else {
-						// System.out.println("AAA");
 						int increaseKey = hm.get(hashTag).key + key;
-						// System.out.println("Before: " + hashTag + " " + key);
 						fh.increaseKey(hm.get(hashTag), increaseKey);
-						// System.out.println("After: " + hashTag + " " + hm.get(hashTag).key);
 					}
 				}
 
 				// Check for top n hashtags
 				else if (s.matches("(\\d+)")) {
-
-					// for (Map.Entry<String, Node> entry : hm.entrySet()) {
-					// System.out.println(
-					// entry.getKey() + " " + entry.getValue().getHashTag() + " " +
-					// entry.getValue().getKey());
-					// }
 
 					// Nodes to be removed
 					int removeNumber = Integer.parseInt(s);
